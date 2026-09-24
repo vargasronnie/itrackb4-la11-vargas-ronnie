@@ -1,29 +1,34 @@
 @extends('layouts.app')
-@section('title', 'Featured Recipe')
-@section('content')
-<h1>{{ $recipe['name'] }}</h1>
-<p>Prepared by: Ronnie T. Vargas</p>
 
-<table class="table table-bordered table-striped">
-    <tr class="table-dark">
-        <th>Field</th>
-        <th>Value</th>
-    </tr>
-    <tr>
-        <td><strong>ID:</strong></td>
-        <td>{{ $recipe['id'] }}</td>
-    </tr>
-    <tr>
-        <td><strong>Name:</strong></td>
-        <td>{{ $recipe['name'] }}</td>
-    </tr>
-    <tr>
-        <td><strong>Description:</strong></td>
-        <td>{{ $recipe['description'] }}</td>
-    </tr>
-    <tr>
-        <td><strong>Cook Time:</strong></td>
-        <td>{{ $recipe['cook_time'] }} minutes</td>
-    </tr>
-</table>
+@section('title', 'Featured Recipe')
+
+@section('content')
+    <h2>Featured Recipe</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ $recipe['id'] }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ $recipe['name'] }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ $recipe['category'] }}</td>
+        </tr>
+        <tr>
+            <th>Difficulty</th>
+            <td>{{ $recipe['difficulty'] }}</td>
+        </tr>
+        <tr>
+            <th>Cook Time</th>
+            <td>{{ $recipe['cook_time'] }}</td>
+        </tr>
+    </table>
+
+    <p>
+        <a href="{{ route('recipes.index') }}" class="btn btn-secondary btn-sm">Back to List</a>
+    </p>
 @endsection

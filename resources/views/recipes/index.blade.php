@@ -1,69 +1,89 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Recipes List</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1 { font-size: 2.5rem; margin-bottom: 4px; }
-        .prepared-by { color: #444; margin-bottom: 20px; }
-        .nav-buttons a {
-            display: inline-block;
-            padding: 8px 16px;
-            margin-right: 10px;
-            border: 1px solid #3b82f6;
-            border-radius: 4px;
-            color: #3b82f6;
-            text-decoration: none;
-        }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th { background: #1a1a1a; color: #fff; text-align: left; padding: 12px; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
-        tr:nth-child(even) { background: #f5f5f5; }
-        .recipe-link {
-            display: inline-block;
-            border: 1px solid #3b82f6;
-            border-radius: 4px;
-            padding: 4px 10px;
-            color: #3b82f6;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>Recipe Flex</h1>
-    <p class="prepared-by">Prepared by: Your Name</p>
+@extends('layouts.app')
 
-    <div class="nav-buttons">
-        <a href="{{ route('recipes.index') }}">Recipe List</a>
-        <a href="{{ route('recipes.featured') }}">Featured Recipe</a>
-        <a href="{{ route('recipes.filter') }}">Filter List</a>
+@section('title', 'Recipe List')
+
+@section('content')
+<div class="container mt-4">
+    <h1>Recipe Flex</h1>
+    <p>Prepared by: Ronnie Vargas</p>
+
+    <div class="mb-4">
+        <a href="{{ route('recipes.index') }}"
+           class="btn {{ request()->query('category') === null && request()->query('cuisine') === null && request()->query('featured') === null ? 'btn-primary' : 'btn-outline-primary' }}">
+            All Recipes
+        </a>
+        <a href="{{ route('recipes.index', ['featured' => 'popular']) }}"
+           class="btn {{ request()->query('featured') !== null ? 'btn-primary' : 'btn-outline-primary' }}">
+            Featured Recipe
+        </a>
     </div>
 
     <h2>My Recipe List</h2>
+    <p>
+        @if ($category !== 'all' && $cuisine !== 'all')
+            Showing {{ $category }} recipes | {{ $cuisine }} cuisine
+        @elseif ($category !== 'all')
+            Showing {{ $category }} recipes
+        @elseif ($cuisine !== 'all')
+            Showing {{ $cuisine }} cuisine
+        @else
+            Show all recipes
+        @endif
+    </p>
 
-    <table>
-        <thead>
+    <div class="card card-body mb-4">
+        <p class="mb-2">
+            <strong>Filter by Category:</strong>
+            <a href="{{ route('recipes.index', ['cuisine' => $cuisine]) }}" class="text-decoration-none">All</a> |
+            <a href="{{ route('recipes.index', ['category' => 'Main Course', 'cuisine' => $cuisine]) }}" class="text-decoration-none">Main Course</a> |
+            <a href="{{ route('recipes.index', ['category' => 'Dessert', 'cuisine' => $cuisine]) }}" class="text-decoration-none">Dessert</a> |
+            <a href="{{ route('recipes.index', ['category' => 'Appetizer', 'cuisine' => $cuisine]) }}" class="text-decoration-none">Appetizer</a>
+        </p>
+
+        <p class="mb-3">
+            <strong>Filter by Cuisine:</strong>
+            <a href="{{ route('recipes.index', ['category' => $category]) }}" class="text-decoration-none">All</a> |
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Filipino']) }}" class="text-decoration-none">Filipino</a> |
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Italian']) }}" class="text-decoration-none">Italian</a> |
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Thai']) }}" class="text-decoration-none">Thai</a>
+        </p>
+
+        <div>
+            <a href="{{ route('recipes.index') }}" class="btn btn-danger">Clear All Filters</a>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
             <tr>
                 <th>No.</th>
                 <th>Name</th>
                 <th>Category</th>
-                <th>Cook Time</th>
+                <th>Cuisine</th>
+                <th>Time</th>
+                <th>Difficulty</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($recipes as $recipe)
+            @forelse ($recipes as $recipe)
                 <tr>
                     <td>{{ $recipe['id'] }}</td>
                     <td>
-                        <a class="recipe-link" href="{{ route('recipes.show', $recipe['id']) }}">
+                        <a href="{{ route('recipes.show', $recipe['id']) }}" class="btn btn-outline-primary">
                             {{ $recipe['name'] }}
                         </a>
                     </td>
                     <td>{{ $recipe['category'] }}</td>
-                    <td>{{ $recipe['cook_time'] }}</td>
+                    <td>{{ $recipe['cuisine'] }}</td>
+                    <td>{{ $recipe['time'] }}</td>
+                    <td>{{ $recipe['difficulty'] }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No recipes found matching your filters.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
-</body>
-</html>
+</div>
+@endsection
