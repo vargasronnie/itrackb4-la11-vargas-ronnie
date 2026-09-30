@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Keep this ABOVE the resource, or /recipes/featured is treated as a recipe id
+Route::get('/recipes/featured', [RecipeController::class, 'featured'])->name('recipes.featured');
 
-Route::resource('recipes', RecipeController::class);
+// B1: create and store registered
+Route::resource('recipes', RecipeController::class)
+    ->only(['index', 'create', 'store', 'show']);

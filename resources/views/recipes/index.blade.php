@@ -18,7 +18,12 @@
         </a>
     </div>
 
-    <h2>My Recipe List</h2>
+    {{-- B6: Add Recipe button, beside the heading (not in the navbar) --}}
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>My Recipe List</h2>
+        <a href="{{ route('recipes.create') }}" class="btn btn-primary">+Add Recipe</a>
+    </div>
+
     <p>
         @if ($category !== 'all' && $cuisine !== 'all')
             Showing {{ $category }} recipes | {{ $cuisine }} cuisine

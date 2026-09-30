@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title', 'Recipe System') - Laravel</title>
 
     <!-- Bootstrap CSS -->
@@ -12,6 +11,11 @@
 </head>
 <body>
     <main class="py-4">
+        {{-- E5: flash message, shown on every page that receives one --}}
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
         @yield('content')
     </main>
 
