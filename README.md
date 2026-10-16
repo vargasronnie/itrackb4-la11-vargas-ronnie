@@ -1,13 +1,10 @@
-# LA7 - Recipe Flex
+Laboratory Activity 9: Your Own Table, Your Own Model
 
-## Q1. Why POST and not GET?
+F1: Which column did you make nullable, and why that one and not another?
+I made notes nullable because not every recipe needs extra cooking tips or comments, so the field can stay empty. The other columns, such as name, time, and difficulty, describe every recipe, so they must always have a value.
 
-If my form used GET, the recipe details would be sent in the URL, and the browser would treat the request like any other page visit. When a page is refreshed, the browser simply repeats its last request, so pressing refresh (or the back button, or opening a bookmarked link) would send the same data to `store()` again and save a duplicate recipe each time. GET is meant for reading data, not changing it, so it should never be used to save a record. POST keeps the data out of the URL and is the correct method for actions that create something.
+F2: Which step failed first for you, and what did the error say?
+The first failure was in Tinker, when I ran App\Models\Recipe::create(['title' => 'test']) before adding $fillable. It threw MassAssignmentException: Add [title] to fillable property to allow mass assignment on [App\Models\Recipe], which showed that Laravel blocks mass assignment until the model lists its columns. I fixed it by adding $fillable to Recipe.php.
 
-## Q2. What stops the save when validation fails?
-
-When a rule in `$request->validate()` fails, Laravel does not return normally from that line. It throws a validation exception, so the rest of `store()`, including the lines that add the recipe and call `saveRecipes()`, never runs. Laravel catches that exception automatically and redirects the visitor back to the form at `/recipes/create`. The error messages and the values they typed are flashed to the session, which is why the messages appear beside each field and the inputs keep their values.
-
-## Q3. Why doesn't the success message appear on every page?
-
-My layout checks `session('success')` on every page, so the check does run everywhere, but the message only exists at one moment. `redirect()->route('recipes.index')->with('success', ...)` stores the message as flash data, which Laravel keeps in the session for the next request only. The recipe list page reads it and shows it, and then Laravel removes it. On every later page load, including a refresh, `session('success')` is empty, so the `@if` is false and nothing is displayed.
+F3: You changed no Blade file in Part D, yet your pages still work. Why not?
+The Blade files read keys such as $recipe['name'] and loop over $recipes, and my controller passes variables with the same names. Switching to Recipe::all() and findOrFail() only changed where the data comes from, and Eloquent models support array-style access, so the views displayed the same keys without any edits.
