@@ -35,18 +35,18 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Cuisine</label>
-                    <select name="cuisine" class="form-select">
-                        <option value="">Select cuisine</option>
-                        @foreach (['Filipino', 'Italian', 'Thai'] as $c)
-                            <option value="{{ $c }}" @selected(old('cuisine') == $c)>{{ $c }}</option>
-                        @endforeach
-                    </select>
-                    @error('cuisine')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
+<div class="mb-3">
+    <label class="form-label">Cuisine</label>
+    <select name="cuisine_id" class="form-select">
+        <option value="">Select cuisine</option>
+        @foreach ($cuisines as $c)
+            <option value="{{ $c->id }}" @selected(old('cuisine_id') == $c->id)>{{ $c->name }}</option>
+        @endforeach
+    </select>
+    @error('cuisine_id')
+        <div class="invalid-feedback d-block">{{ $message }}</div>
+    @enderror
+</div>
 
                 <div class="mb-3">
                     <label class="form-label">Time (minutes)</label>

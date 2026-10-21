@@ -26,11 +26,11 @@
 
     <p>
         @if ($category !== 'all' && $cuisine !== 'all')
-            Showing {{ $category }} recipes | {{ $cuisine }} cuisine
+            Showing {{ $category }} recipes | cuisine #{{ $cuisine }}
         @elseif ($category !== 'all')
             Showing {{ $category }} recipes
         @elseif ($cuisine !== 'all')
-            Showing {{ $cuisine }} cuisine
+            Showing cuisine #{{ $cuisine }}
         @else
             Show all recipes
         @endif
@@ -48,9 +48,9 @@
         <p class="mb-3">
             <strong>Filter by Cuisine:</strong>
             <a href="{{ route('recipes.index', ['category' => $category]) }}" class="text-decoration-none">All</a> |
-            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Filipino']) }}" class="text-decoration-none">Filipino</a> |
-            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Italian']) }}" class="text-decoration-none">Italian</a> |
-            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 'Thai']) }}" class="text-decoration-none">Thai</a>
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 1]) }}" class="text-decoration-none">Filipino</a> |
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 2]) }}" class="text-decoration-none">Italian</a> |
+            <a href="{{ route('recipes.index', ['category' => $category, 'cuisine' => 3]) }}" class="text-decoration-none">Thai</a>
         </p>
 
         <div>
@@ -79,7 +79,7 @@
                         </a>
                     </td>
                     <td>{{ $recipe['category'] }}</td>
-                    <td>{{ $recipe['cuisine'] }}</td>
+                    <td>{{ $recipe->cuisine->name }}</td>
                     <td>{{ $recipe['time'] }}</td>
                     <td>{{ $recipe['difficulty'] }}</td>
                 </tr>
@@ -90,5 +90,8 @@
             @endforelse
         </tbody>
     </table>
+
+    {{-- TEMPORARY: remove after screenshot 7 --}}
+    <p>Queries: {{ count(\Illuminate\Support\Facades\DB::getQueryLog()) }}</p>
 </div>
 @endsection

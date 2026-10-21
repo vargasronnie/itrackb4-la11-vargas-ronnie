@@ -3,22 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Recipe extends Model
 {
     protected $fillable = [
-        'title',
+        'name',
         'category',
-        'cooking_time',
-        'is_vegetarian',
+        'cuisine_id',
+        'time',
+        'difficulty',
+        'servings',
         'notes',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_vegetarian' => 'boolean',
-            'cooking_time' => 'integer',
+            'time' => 'integer',
+            'servings' => 'integer',
         ];
+    }
+
+    public function cuisine(): BelongsTo
+    {
+        return $this->belongsTo(Cuisine::class);
     }
 }
