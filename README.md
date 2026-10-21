@@ -1,10 +1,10 @@
-Laboratory Activity 9: Your Own Table, Your Own Model
+Laboratory Activity 10:
 
-F1: Which column did you make nullable, and why that one and not another?
-I made notes nullable because not every recipe needs extra cooking tips or comments, so the field can stay empty. The other columns, such as name, time, and difficulty, describe every recipe, so they must always have a value.
+G1: Which column did you turn into a table, and why that one and not another?
+I turned the cuisine column into a cuisines table. Its values come from a fixed list (Filipino, Italian, and Thai), the same values repeat across many recipes, and a cuisine could later need details of its own, such as a region. Columns like time and servings are numbers that vary from recipe to recipe, so they don’t belong in a lookup table.
 
-F2: Which step failed first for you, and what did the error say?
-The first failure was in Tinker, when I ran App\Models\Recipe::create(['title' => 'test']) before adding $fillable. It threw MassAssignmentException: Add [title] to fillable property to allow mass assignment on [App\Models\Recipe], which showed that Laravel blocks mass assignment until the model lists its columns. I fixed it by adding $fillable to Recipe.php.
+G2: What number did screenshot 6 show, and why exactly that number?
+Screenshot 6 showed the Queries count with with() removed, which is the number of queries the page ran. One query loaded the five recipes, and then one more query ran for each recipe to get its cuisine, so the count is 6. Adding with('cuisine') reduces this to 2, one for the recipes and one for all the cuisines.
 
-F3: You changed no Blade file in Part D, yet your pages still work. Why not?
-The Blade files read keys such as $recipe['name'] and loop over $recipes, and my controller passes variables with the same names. Switching to Recipe::all() and findOrFail() only changed where the data comes from, and Eloquent models support array-style access, so the views displayed the same keys without any edits.
+G3: Your belongsTo method is named in the singular. What would break if you made it plural?
+Laravel takes the method name, adds _id, and looks for that column on the recipes table. If the method were called cuisines(), Laravel would look for cuisines_id, which doesn’t exist, so loading the relationship would fail with an error about a missing column.
