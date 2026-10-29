@@ -3,9 +3,14 @@
 use App\Http\Controllers\RecipeController;
 use Illuminate\Support\Facades\Route;
 
-// Keep this ABOVE the resource, or /recipes/featured is treated as a recipe id
-Route::get('/recipes/featured', [RecipeController::class, 'featured'])->name('recipes.featured');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// B1: create and store registered
-Route::resource('recipes', RecipeController::class)
-    ->only(['index', 'create', 'store', 'show']);
+Route::get('/recipes/featured', [RecipeController::class, 'featured'])
+    ->name('recipes.featured');
+
+Route::get('/recipes/filter/{cuisine}', [RecipeController::class, 'filter'])
+    ->name('recipes.filter');
+
+Route::resource('recipes', RecipeController::class);

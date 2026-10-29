@@ -1,10 +1,13 @@
-Laboratory Activity 10:
+# ITRACKB4 LA11: Finish Your Own CRUD
 
-G1: Which column did you turn into a table, and why that one and not another?
-I turned the cuisine column into a cuisines table. Its values come from a fixed list (Filipino, Italian, and Thai), the same values repeat across many recipes, and a cuisine could later need details of its own, such as a region. Columns like time and servings are numbers that vary from recipe to recipe, so they don’t belong in a lookup table.
+## G1: What two things must be true for route model binding, and what happens if only one is?
 
-G2: What number did screenshot 6 show, and why exactly that number?
-Screenshot 6 showed the Queries count with with() removed, which is the number of queries the page ran. One query loaded the five recipes, and then one more query ran for each recipe to get its cuisine, so the count is 6. Adding with('cuisine') reduces this to 2, one for the recipes and one for all the cuisines.
+The method parameter must be type-hinted with the model class (`Recipe $recipe`), and its variable name must match the route segment (`{recipe}`). If the name is wrong, Laravel can't match it to the URL segment, so the record isn't loaded and the method gets an empty `Recipe` instead. If the type-hint is missing, the method receives only the raw id, so code that uses `$recipe->name` breaks.
 
-G3: Your belongsTo method is named in the singular. What would break if you made it plural?
-Laravel takes the method name, adds _id, and looks for that column on the recipes table. If the method were called cuisines(), Laravel would look for cuisines_id, which doesn’t exist, so loading the relationship would fail with an error about a missing column.
+## G2: Why did my Delete link not give a 404 even though the address was correct?
+
+The Delete link sends a GET request to `/recipes/{id}`, and that address is already the `show` route, so Laravel loaded the detail page instead of returning a 404. The destroy route only answers DELETE, which a link can't send, so the delete has to be a form that sends a DELETE request through `@method('DELETE')`.
+
+## G3: What would break if I left out the second argument of old() on the edit form, and what would break if I used only the second argument?
+
+Without the second argument, the edit form opens with blank fields, because there's no recipe value to fall back on. If I used only the recipe value and left out the `old()` input, a failed validation would throw away my typed changes and show the original values again.

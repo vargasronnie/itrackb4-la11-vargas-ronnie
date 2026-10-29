@@ -1,35 +1,46 @@
-```blade
-<nav style="
-    background: #1a1a1a;
-    padding: 15px 40px;
-">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a href="{{ route('recipes.index') }}"
-       style="
-           color: white;
-           text-decoration: none;
-           margin-right: 20px;
-           font-weight: bold;
-       ">
-        Recipe Flex
-    </a>
+    <div class="container">
 
-    <a href="{{ route('recipes.index') }}"
-       style="
-           color: white;
-           text-decoration: none;
-           margin-right: 20px;
-       ">
-        Recipes
-    </a>
+        <a class="navbar-brand"
+           href="{{ route('movies.index') }}">
+            Movie App
+        </a>
 
-    <a href="{{ route('recipes.featured') }}"
-       style="
-           color: white;
-           text-decoration: none;
-       ">
-        Featured Recipe
-    </a>
+        <div class="navbar-nav">
+
+            <a class="nav-link"
+               href="{{ route('movies.index') }}">
+                All Movies
+            </a>
+
+            <a class="nav-link"
+               href="{{ route('movies.featured') }}">
+                Featured
+            </a>
+
+            <a class="nav-link"
+               href="{{ route('movies.index', ['genre' => 'Sci-Fi']) }}">
+                Sci-Fi
+            </a>
+
+            <a class="nav-link"
+               href="{{ route('movies.index', ['genre' => 'Action']) }}">
+                Action
+            </a>
+
+            <a class="nav-link"
+               href="{{ route('movies.index', ['genre' => 'Crime']) }}">
+                Crime
+            </a>
+
+            <a class="nav-link"
+               href="{{ route('movies.create') }}">
+                + Add Movie
+            </a>
+
+        </div>
+
+    </div>
 
 </nav>
-```

@@ -1,25 +1,83 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Recipe System') - Laravel</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        @yield('title', 'Recipe App')
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
 </head>
+
 <body>
-    <main class="py-4">
-        {{-- E5: flash message, shown on every page that receives one --}}
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
 
-        @yield('content')
-    </main>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="container">
+
+            <a class="navbar-brand"
+               href="{{ route('recipes.index') }}">
+                Recipe App
+            </a>
+
+            <div class="navbar-nav">
+
+                <a class="nav-link"
+                   href="{{ route('recipes.index') }}">
+                    All Recipes
+                </a>
+
+                <a class="nav-link"
+                   href="{{ route('recipes.featured') }}">
+                    Featured
+                </a>
+
+                <a class="nav-link"
+                   href="{{ route('recipes.index', ['cuisine_id' => 1]) }}">
+                    Filipino
+                </a>
+
+                <a class="nav-link"
+                   href="{{ route('recipes.index', ['cuisine_id' => 2]) }}">
+                    Italian
+                </a>
+
+                <a class="nav-link"
+                   href="{{ route('recipes.create') }}">
+                    + Add Recipe
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    @if (session('success'))
+
+        <div class="container mt-3">
+
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+
+        </div>
+
+    @endif
+
+
+    @yield('content')
+
 </body>
+
 </html>
