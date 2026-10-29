@@ -73,7 +73,7 @@
     </form>
 
     <div class="text-center mt-5 mb-3">
-        <p>Prepared by: <strong>Your Name</strong></p>
+        <p>Prepared by: <strong>Ronnie Vargas</strong></p>
     </div>
 
 </div>

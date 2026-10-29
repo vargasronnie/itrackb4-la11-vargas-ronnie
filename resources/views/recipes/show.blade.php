@@ -34,7 +34,13 @@
 
     <a href="{{ route('recipes.edit', $recipe) }}" class="btn btn-primary">Edit</a>
 
-    <a href="{{ route('recipes.destroy', $recipe) }}" class="btn btn-danger">Delete</a>
+    <form action="{{ route('recipes.destroy', $recipe) }}" method="POST"
+          onsubmit="return confirm('Delete this record?')"
+          style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
 
     <a href="{{ route('recipes.index') }}" class="btn btn-secondary">Back to Recipes</a>
 
